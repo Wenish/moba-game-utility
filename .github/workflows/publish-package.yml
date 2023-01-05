@@ -1,0 +1,35 @@
+name: Publish package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Install dependencies
+        run: npm install
+      - name: Build package
+        run: npm run build
+      - name: Check version change
+        id: version-check
+        run: |
+          PKG_VERSION=$(jq -r '.version' package.json)
+          PREV_TAG=$(git describe --abbrev=0 --tags)
+          PREV_TAG_VERSION=$(echo "$PREV_TAG" | cut -d 'v' -f 2)
+          if [ "$PKG_VERSION" == "$PREV_TAG_VERSION" ]; then
+            echo "Error: version in package.json has not been incremented"
+            exit 1
+          fi
+      - name: Publish package
+        if: steps.version-check.outputs.status == 'Success'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
