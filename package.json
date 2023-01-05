@@ -1,0 +1,27 @@
+{
+  "name": "moba-game-utility",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wenish/moba-game-utility.git"
+  },
+  "keywords": [
+    "moba",
+    "game",
+    "utility"
+  ],
+  "author": "Jonas Voland",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wenish/moba-game-utility/issues"
+  },
+  "homepage": "https://github.com/Wenish/moba-game-utility#readme",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
+}
